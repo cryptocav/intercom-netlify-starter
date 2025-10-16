@@ -21,7 +21,21 @@
       return; 
     }
     console.log('Setting intercom settings...');
-    window.intercomSettings = Object.assign({ app_id: appId }, settings || {});
+    
+    // For security mode: if providing user data without user_hash, 
+    // Intercom will reject it. So we only pass user data if we have user_hash
+    const hasUserData = settings.name || settings.email || settings.user_id;
+    const hasUserHash = settings.user_hash;
+    
+    let finalSettings;
+    if (hasUserData && !hasUserHash) {
+      console.warn('User data provided but no user_hash - loading as anonymous to avoid security errors');
+      finalSettings = { app_id: appId }; // Anonymous mode
+    } else {
+      finalSettings = Object.assign({ app_id: appId }, settings || {});
+    }
+    
+    window.intercomSettings = finalSettings;
     console.log('Final intercom settings:', window.intercomSettings);
 
     // Intercom boot snippet
@@ -55,11 +69,16 @@
     const name = document.getElementById('name').value || 'Test User';
     const email = document.getElementById('email').value || 'test@cavpatrol.xyz';
     const user_id = document.getElementById('userId').value || ('user_' + Math.floor(Math.random()*1e6));
-    // NOTE: user_hash is optional for basic testing; leave empty unless you implement server-side signing
+    
+    console.log('Identified user form submitted');
+    
+    // Since security mode is enabled, we need user_hash for identified users
+    // For now, this will load as anonymous (handled in loadIntercom function)
+    // To use identified mode, implement server-side user_hash generation
     loadIntercom({
       name, email, user_id,
       created_at: Math.floor(Date.now()/1000)
-      // user_hash: 'SIGN_AT_SERVER' // optional for secure mode
+      // user_hash: 'GENERATE_THIS_ON_SERVER' // Required when security mode is enabled
     });
   });
 
