@@ -1,0 +1,17 @@
+# Netlify config for a static Intercom test site
+[build]
+  publish = "."   # root directory is the site
+
+# Tighten caching for config so edits show up immediately
+[[headers]]
+  for = "/js/config.js"
+  [headers.values]
+    Cache-Control = "no-store"
+
+# Basic security headers (optional)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

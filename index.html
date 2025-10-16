@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intercom Test – cavpatrol.xyz</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <!--
+    Set your Intercom APP ID in /js/config.js (copied from /js/config.sample.js).
+    You can also hardcode it by adding:
+    <meta name="intercom-app-id" content="APP_ID_HERE" />
+  -->
+</head>
+<body>
+  <main class="container">
+    <h1>🧩 Intercom Widget Test</h1>
+    <p class="muted">This site is a minimal sandbox to verify Intercom Messenger loads and to simulate user states.</p>
+
+    <section class="card">
+      <h2>1) Configure</h2>
+      <p>
+        Edit <code>/js/config.js</code> and set <code>APP_ID</code> to your Intercom App ID.
+        Optional: set <code>IDENTITY_VERIFICATION_SECRET</code> on your server to generate a <code>user_hash</code> (not required for basic tests).
+      </p>
+      <div id="appIdStatus" class="status">Checking APP ID…</div>
+    </section>
+
+    <section class="card">
+      <h2>2) Simulate a Visitor</h2>
+      <div class="grid">
+        <div>
+          <h3>Anonymous Visitor</h3>
+          <p>Loads Intercom without name/email so you can test anonymous conversations.</p>
+          <button id="btnAnon" class="btn">Load Anonymous</button>
+        </div>
+        <div>
+          <h3>Identified User</h3>
+          <p>Provide fake user data to test logged-in experiences.</p>
+          <form id="userForm">
+            <label>Name <input id="name" placeholder="Jane Tester" /></label>
+            <label>Email <input id="email" placeholder="jane.tester@cavpatrol.xyz" /></label>
+            <label>User ID <input id="userId" placeholder="user_12345" /></label>
+            <button class="btn" type="submit">Load Identified</button>
+          </form>
+          <p class="hint">Note: Identity verification (<code>user_hash</code>) is optional for testing.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3) Controls</h2>
+      <div class="controls">
+        <button id="btnShow" class="btn">Show Messenger</button>
+        <button id="btnHide" class="btn">Hide Messenger</button>
+        <button id="btnShutdown" class="btn outline">Shutdown Intercom</button>
+        <button id="btnBoot" class="btn outline">Reboot Intercom</button>
+      </div>
+    </section>
+
+    <footer class="muted small">
+      Deployed on Netlify. Map to <code>testing.cavpatrol.xyz</code> when ready.
+    </footer>
+  </main>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/intercom.js"></script>
+</body>
+</html>
