@@ -2,4 +2,4 @@
 node_modules
 dist
 # local overrides
-js/config.js
+# js/config.js
